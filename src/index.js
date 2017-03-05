@@ -1,47 +1,19 @@
-import fs from 'fs';
+// load and parse your json file
+// then, tell me the next id value
 
-// function Promise(fn) {
+const items = [
+    { id: 2, name: 'first' },
+    { id: 1, name: 'second' },
+    { id: 3, name: 'second' },
+    { id: 5, name: 'second' },
+    { id: 4, name: 'second' },
+];
 
-//     this.resolveFns = [];
+const itemIds = items.map(item => item.id);
 
-//     function resolve(results) {
-//         this.resolveFns.forEach(fn => {
-//             fn(results);
-//         });
-//     }
+const nextId = itemIds.reduce((prevValue, currentValue) => {
+    console.log('prev', prevValue, 'current', currentValue);
+    return Math.max(prevValue, currentValue);
+}, 0) + 1;
 
-//     this.then = function(fn) {
-//         this.resolveFns.push(fn);
-//     }
-
-//     fn(resolve, reject);
-
-// }
-
-
-const p = new Promise((resolve, reject) => {
-    fs.readFile(process.argv[2], 'utf8', (err, data) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        console.log('resolved');
-        resolve(JSON.parse(data));
-    });
-});
-
-console.log("made it here...");
-
-p.then(results => {
-    console.log('all done');
-    console.log('file contents:', results);
-});
-
-p.then(results => {
-    console.log('all done');
-    console.log('file contents:', results);
-});
-
-console.log("made it here 2...");
-
-
+console.log(nextId);
