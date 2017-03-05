@@ -8,16 +8,14 @@ Eric Greene - [http://t4d.io](http://t4d.io) - [LinkedIn](https://www.linkedin.c
 
 Class:
 
-- Today & Tomorrow: 8:30am to 5:30pm
+- Today & Tomorrow: 8:30am to 4:45pm (4:45pm to 5:30pm questions)
 
 Breaks:
 
 - Morning: 10:15am to 10:30am
 - Lunch: Noon to 1pm
-- Afternoon #1: 2:25pm to 2:35pm
-- Afternoon #2: 4:00pm to 4:10pm
-
-
+- Afternoon #1: 2:10pm to 2:20pm
+- Afternoon #2: 3:30pm to 3:40pm
 
 ## Links
 
