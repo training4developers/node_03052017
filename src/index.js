@@ -1,25 +1,39 @@
-1. Create several static html file
-2. Use the URL information to load the correct static file
-3. Move the code to read the file from disk to a separate module
-4. EXTRA CREDIT: Manage the asynchronous call to read the file with a promise
+import bodyParser from 'body-parser';
+import express from 'express';
 
+const app = express();
 
-import http from 'http';
-import fs from 'fs';
-import path from 'path';
+app.use(bodyParser.json());
 
-const server = http.createServer( (req, res) => {
+app.use('/', (req, res, next) => {
 
-    console.log(req.method);
-    console.log(req.headers['host']);
-    console.log(req.url);
+    console.log(req.body);
 
-    fs.readFile(path.join(__dirname, '..', 'src', 'index.html'), 'utf8', (err, data) => {
-        res.end(data);
-    });
+    res.message = 'Hallo Wereld!!!';
+    next();
+});
 
-} );
+app.use('/', (req, res, next) => {
+    res.message += ' Ahlan Alam!!!';
+    next();
+});
 
-server.listen(8080, () => {
-    console.log('server running on port 8080');
+app.use('/', (req, res) => {
+    res.message += ' Bonjour le monde!!!';
+
+    res.send(res.message);
+});
+
+app.use('/thai', (req, res) => {
+    res.status(500).send('Unsupported Language');
+});
+
+app.use(express.static('src'));
+
+app.listen(8080, err => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log('web server started on port 8080');
 });
