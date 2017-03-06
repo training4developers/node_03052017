@@ -32,6 +32,7 @@
     "debug": "^2.6.1",
     "eslint": "^3.17.0",
     "express": "^4.15.2",
+    "geoservices": "^1.1.1",
     "grunt": "^1.0.1",
     "gulp": "^3.9.1",
     "json-server": "^0.9.4",
