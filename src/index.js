@@ -1,19 +1,60 @@
-// load and parse your json file
-// then, tell me the next id value
+import fs from 'fs';
+import readline from 'readline';
 
-const items = [
-    { id: 2, name: 'first' },
-    { id: 1, name: 'second' },
-    { id: 3, name: 'second' },
-    { id: 5, name: 'second' },
-    { id: 4, name: 'second' },
-];
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    prompt: 'Enter Command> ',
+});
 
-const itemIds = items.map(item => item.id);
+const rawData = fs.readFileSync(process.argv[2], 'utf8');
+const data = JSON.parse(rawData);
+let newData = {};
 
-const nextId = itemIds.reduce((prevValue, currentValue) => {
-    console.log('prev', prevValue, 'current', currentValue);
-    return Math.max(prevValue, currentValue);
-}, 0) + 1;
+const list = () => {
+    console.log(data);
+};
 
-console.log(nextId);
+const add = () => {
+    return new Promise(resolve => {
+        resolve();
+    });
+};
+
+const exit = () => {
+    rl.close();
+};
+
+const processCommand = command => {
+
+    switch(command) {
+        case 'list':
+            list();
+            rl.prompt();
+            break;
+        case 'add':
+            add().then(() => {
+                rl.prompt();
+            });
+            break;
+        case 'exit':
+            exit();
+            break;
+        default:
+            console.log('invalid command');
+            rl.prompt();
+            break;
+    }
+
+};
+
+rl.prompt();
+rl.on('line', line => {
+
+    processCommand(line);
+    
+}).on('close', () => {
+
+    process.exit();
+    
+});
