@@ -21,6 +21,7 @@
 		"quotes": ["error", "single"],
 		"semi": ["error", "always"],
 		"no-console": 0,
-		"strict": 1
+		"strict": 1,
+        "no-constant-condition": "off"
 	}
 }

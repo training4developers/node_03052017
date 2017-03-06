@@ -11,14 +11,42 @@ const rawData = fs.readFileSync(process.argv[2], 'utf8');
 const data = JSON.parse(rawData);
 let newData = {};
 
+const getNextId = () => 
+    data.map(item => item.id)
+        .reduce((p, c) => Math.max(p, c), 0) + 1;
+
 const list = () => {
     console.log(data);
 };
 
-const add = () => {
-    return new Promise(resolve => {
-        resolve();
+const askQuestion = (question, objToUpdate, propName) => {
+    return new Promise(resolve => {    
+        rl.question(question, answer => {
+            objToUpdate[propName] = answer;
+            resolve();
+        });
     });
+
+};
+
+const add = () => {
+    return askQuestion('What is the name? ', newData, 'name')
+        .then(() => askQuestion('What is the color? ', newData, 'color'))
+        .then(() => askQuestion('What is the size? ', newData, 'size'))
+        .then(() => {
+    
+            newData.id = getNextId();
+            data.push(newData);
+            newData = {};
+
+            return new Promise(resolve => {
+                fs.writeFile(process.argv[2],
+                    JSON.stringify(data, null, '\t'), 'utf8', () => {
+                        resolve();
+                    });
+            });
+
+        });
 };
 
 const exit = () => {
@@ -33,9 +61,7 @@ const processCommand = command => {
             rl.prompt();
             break;
         case 'add':
-            add().then(() => {
-                rl.prompt();
-            });
+            add().then(() => { rl.prompt(); });
             break;
         case 'exit':
             exit();
@@ -43,18 +69,12 @@ const processCommand = command => {
         default:
             console.log('invalid command');
             rl.prompt();
-            break;
     }
-
 };
 
 rl.prompt();
 rl.on('line', line => {
-
     processCommand(line);
-    
 }).on('close', () => {
-
     process.exit();
-    
 });
