@@ -1,45 +1,46 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-
-import { geocode } from './geo';
+import { readData, writeData, getNextId, findById } from './db';
 
 const router = express.Router();
 
-// collection url
-// http://localhost:8080/api/widgets
-
-// GET - returns all of the widget
-// POST - adds a widget
-
-// item url
-// http://localhost:8080/api/widgets/:widgetId
-
-// GET - get a single widget
-// PUT - replace/update a widget
-// DELETE - delete a widget
-
-
-
-
-router.route('/geocodeone/:id')
-    .delete()
-    .put()
-    .get()
+router.route('/')
+    .get((req, res) => {
+        readData().then(data => res.json(data));
+    })
     .post(bodyParser.json(), (req, res) => {
-
-        Number(req.params.id)
-
-        geocode(req.body.address)
-            .then(results => res.json(results));
-
+        readData().then(data => {
+            req.body.id = getNextId(data);
+            data.push(req.body);
+            writeData(data).then(() => {
+                res.json(req.body);
+            });
+        });
     });
 
-router.route('/geocodemany')
-    .post(bodyParser.json(), (req, res) => {
+router.route('/:id')
+    .get((req, res) => {
+        readData().then(data =>
+            res.json(findById(data, req.params.id)));
+    })
+    .put(bodyParser.json(), (req, res) => {
 
-        Promise.all( req.body.addresses.map(address => geocode(address)) )
-            .then(results => res.json(results));
+        readData().then(data => {
+            const oldItem = findById(data, req.params.id);
+            req.body.id = Number(req.params.id);
+            data.splice(data.indexOf(oldItem), 1, req.body);
+            writeData(data).then(() => res.json(oldItem));
+        });
 
-    });    
+    })
+    .delete((req, res) => {
+        readData().then(data => {
+            const item = findById(data, req.params.id);
+            writeData(data.filter(item =>
+                item.id !== Number(req.params.id))).then(() =>
+                    res.json(item));
+        });
+    });
 
 export default router;
+    

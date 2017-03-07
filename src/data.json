@@ -1,1 +1,43 @@
-[{"make":"Toyota","model":"Sienna","year":2005,"color":"yellow","id":2},{"name":"test 2","color":"red","size":"large","id":1},{"name":"e","color":"yellow","size":"e","id":3,"make":"Toyota","model":"Sienna","year":2004},{"make":"Toyota","model":"Yaris","year":2015,"color":"yellow","id":4}]
+[
+	{
+		"make": "Toyota",
+		"model": "Sienna",
+		"year": 2005,
+		"color": "yellow",
+		"id": 2
+	},
+	{
+		"name": "test 2",
+		"color": "red",
+		"size": "large",
+		"id": 1
+	},
+	{
+		"name": "e",
+		"color": "yellow",
+		"size": "e",
+		"id": 3,
+		"make": "Toyota",
+		"model": "Sienna",
+		"year": 2004
+	},
+	{
+		"make": "Toyota",
+		"model": "Yaris",
+		"year": 2015,
+		"color": "yellow",
+		"id": 4
+	},
+	{
+		"addresses": [
+			"Lynchburg, VA",
+			"Cairo, EG",
+			"Amsterdam, NL",
+			"Tauranga, NZ",
+			"Lahore, PK",
+			"Tacoma, WA",
+			"Nijmegen, NL"
+		],
+		"id": 5
+	}
+]
